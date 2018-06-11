@@ -1,0 +1,17 @@
+FROM ubuntu:16.04
+FROM ruby:2.4.2
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
+FROM mysql:5.7
+FROM redis
+
+MAINTAINER Ngo Anh Khang
+
+ENV USER root
+ENV HOME /root
+RUN apt-get update
+RUN apt-get install -y openssh-server
+RUN mkdir /var/run/sshd
+RUN echo "root:123456" | chpasswd
+EXPOSE 22
+ENTRYPOINT /usr/sbin/sshd -D
+
